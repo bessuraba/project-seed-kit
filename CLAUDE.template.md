@@ -29,15 +29,25 @@ Routing, before writing anything:
   discovery) → new file `docs/research/YYYY-MM-DD-topic.md`. Never edit an existing dated file
   afterward — a correction is a new dated file, not a rewrite.
   - Exception: `docs/research/sources.md` — a running log of source channels, updated in place.
+  - Shape: state up front what prompted the session and what method was used; findings with
+    sources, live-verified facts flagged as such vs. inferred ones; end by naming which
+    synthesis/plan file should be updated as a result — but make that update in that file, not here.
 - New understanding derived from research → update the matching file in `docs/synthesis/`
-  (create one if the topic is new). Synthesis cites which dated research file(s) it's built from;
-  it does not duplicate raw findings.
+  (create one if the topic is new, e.g. `competitors.md`, `user-research.md`). Synthesis cites which
+  dated research file(s) it's built from; it does not duplicate raw findings. Shape: current
+  synthesis (what's known, confirmed vs. inferred) + open questions (what the next research session
+  should target).
 - A decision or roadmap change → update `docs/plans/gtm-plan.md`, or a new file in `docs/plans/`
-  if it's a genuinely separate plan.
+  if it's a genuinely separate plan. Shape: current synthesis of key decisions (each citing its
+  grounding research/synthesis) + one prioritized open-items checklist, `[ ]`/`[x]` with a one-line
+  note on how/when something got done.
 - A reusable framework/methodology → add to the matching topic file under `docs/methodology/`
   (linked from `docs/methodology/frameworks.md`'s index) rather than re-deriving it inline in a
   synthesis or plan file. Split into a new topic file if one grows unwieldy.
-- Legal/ToS risk findings → `docs/legal/`.
+- Legal/ToS risk findings → `docs/legal/`. Living doc (edited in place, not dated), same spirit as
+  synthesis: bright-line risks vs. gray-area judgment calls, the actual decision + reasoning (real
+  precedent over official guidance where they diverge), an open-items checklist ordered by when it
+  matters ("before selling anything," "before real revenue").
 
 Cross-reference docs with relative links (`../synthesis/...`), so they stay navigable regardless of
 entry point.
@@ -49,6 +59,24 @@ owns the topic and should be updated instead of forking a new one.
 plan): check `docs/methodology/` (start from `frameworks.md`'s index) for an applicable framework
 and apply it to how the work is done, not just what gets written down. Skip this check only when
 the task itself is adding to or updating methodology.
+
+## Skills
+
+A skill (`.claude/skills/<name>/SKILL.md`) captures a recurring, non-obvious workflow with real
+gotchas already discovered the hard way — a CLI's quirky flag behavior, a platform's caching
+gotcha, a debugging sequence that took real trial-and-error to figure out. Not a place for one-off
+task notes or anything a first attempt would get right anyway.
+
+- **If a relevant skill exists for the task at hand, use it** — don't re-derive a process from
+  scratch that's already been solved and documented. Check before starting nontrivial or
+  unfamiliar-workflow work, not just when stuck.
+- **Write one when a real gotcha gets solved the hard way** — something that cost real back-and-
+  forth to figure out (a wrong assumption corrected, an undocumented quirk found by trial and
+  error), not a routine step. Name the actual symptom/trigger up front so it's findable later, then
+  the fix and why it works.
+- **Promoting a skill to a shared/reusable location** (like this repo's own `skills/`): only after
+  it's actually been reused across 2+ projects, not on first write. Strip project-specific names
+  and file paths before promoting; leave a short note on which projects it's been used in.
 
 ## If this project has an external audience (public package, Apify Actor, public API, ...)
 

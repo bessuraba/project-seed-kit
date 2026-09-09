@@ -11,20 +11,22 @@ end-to-end, not designed up front.
 - **`docs/methodology/`** — the actual reusable asset: named, sourced frameworks for product
   discovery, market mapping/sizing, pricing, and demand validation. Generic, usable as-is in any
   new project.
-- **`CLAUDE.template.md`** — the doc-routing rules as a copy-pasteable `CLAUDE.md` starting point.
-  One section (testing/linting) needs customizing per project's actual stack; everything else is
-  generic.
+- **`CLAUDE.template.md`** — the actual rules file: doc routing, skill usage, and (if relevant)
+  the public-README-vs-internal-docs split, all in one place an agent actually loads automatically.
+  Deliberately not spread across passive per-folder README/template files — those don't get read
+  unless something already told the agent to look there, so the real rules live in the one file
+  that does get loaded every session. One section (testing/linting) needs customizing per project's
+  actual stack; everything else is generic.
 - **`skills/`** — a place for Claude Code skills that prove reusable across more than one project.
-  Empty until something earns its place here.
+  Empty until something earns its place here; the rules for writing/promoting one live in
+  `CLAUDE.template.md`, not a README here.
 
 ## Using this for a new project
 
 1. Copy `docs/` into the new project's repo root.
 2. Copy `CLAUDE.template.md` in as `CLAUDE.md`, fill in the Testing & linting section for that
    project's real stack.
-3. Delete the `TEMPLATE.md` placeholders in `docs/research/`, `docs/synthesis/`, `docs/legal/` once
-   real content starts landing there — they're just there so the folders aren't empty in git.
-4. Keep `docs/methodology/` as-is unless a framework genuinely doesn't apply; add new ones back
+3. Keep `docs/methodology/` as-is unless a framework genuinely doesn't apply; add new ones back
    here once they've proven reusable, not just once they're written.
 
 ## Keeping this in sync
