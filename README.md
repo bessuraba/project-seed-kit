@@ -20,20 +20,22 @@ end-to-end, not designed up front.
 - **`skills/`** — a place for Claude Code skills that prove reusable across more than one project.
   Empty until something earns its place here; the rules for writing/promoting one live in
   `CLAUDE.template.md`, not a README here.
-- **`.githooks/pre-commit` + `setup-hooks.sh`** — actual technical enforcement of the structure
-  rules, not just an instruction an agent could ignore: blocks a stray `.md` at repo root, a
-  wrongly-named `docs/research/` file, or an edit to an already-committed dated research file.
-  Stack-agnostic (plain bash + git), works the same regardless of the project's language.
+- **`.githooks/pre-commit`** — actual technical enforcement of the structure rules, not just an
+  instruction an agent could ignore: blocks a stray `.md` at repo root, a wrongly-named
+  `docs/research/` file, or an edit to an already-committed dated research file. Stack-agnostic
+  (plain bash + git), works the same regardless of the project's language.
+- **`scripts/`** — standalone scripts run manually, not auto-loaded by anything. Currently just
+  `setup-hooks.sh` (wires the pre-commit hook above); see `scripts/README.md`.
 
 ## Using this for a new project
 
 1. Copy `docs/` into the new project's repo root.
 2. Copy `CLAUDE.template.md` in as `CLAUDE.md`, fill in the Testing & linting section for that
    project's real stack.
-3. Copy `.githooks/` and `setup-hooks.sh` in, then run `bash setup-hooks.sh` once to wire the hook
-   (`git config core.hooksPath .githooks`). If the project already has its own pre-commit hook
+3. Copy `.githooks/` and `scripts/` in, then run `bash scripts/setup-hooks.sh` once to wire the
+   hook (`git config core.hooksPath .githooks`). If the project already has its own pre-commit hook
    (e.g. via npm's `prepare` script), merge the docs-structure checks into that hook instead of
-   running two separate hook mechanisms.
+   running two separate hook mechanisms — see `scripts/README.md`.
 4. Keep `docs/methodology/` as-is unless a framework genuinely doesn't apply; add new ones back
    here once they've proven reusable, not just once they're written.
 
