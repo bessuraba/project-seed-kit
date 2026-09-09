@@ -9,17 +9,19 @@ end-to-end, not designed up front.
 - **`docs/`** — the research/synthesis/plans/methodology structure and the rule behind it (dated,
   immutable raw research vs. living synthesis). See `docs/README.md` for the full explanation.
 - **`docs/methodology/`** — the actual reusable asset: named, sourced frameworks for product
-  discovery, market mapping/sizing, pricing, and demand validation. Generic, usable as-is in any
-  new project.
+  discovery, market mapping/sizing, pricing, and demand validation — generic, usable as-is in any
+  new project — plus one Apify-specific playbook, kept in because Apify Actors are a recurring
+  project type here, not because it's universally generic.
 - **`CLAUDE.template.md`** — the actual rules file: doc routing, skill usage, and (if relevant)
   the public-README-vs-internal-docs split, all in one place an agent actually loads automatically.
   Deliberately not spread across passive per-folder README/template files — those don't get read
   unless something already told the agent to look there, so the real rules live in the one file
   that does get loaded every session. One section (testing/linting) needs customizing per project's
   actual stack; everything else is generic.
-- **`skills/`** — a place for Claude Code skills that prove reusable across more than one project.
-  Empty until something earns its place here; the rules for writing/promoting one live in
-  `CLAUDE.template.md`, not a README here.
+- **`skills/`** — Claude Code skills that proved reusable across more than one project. Currently
+  `apify-cli-debug` (build debugging via the `apify` CLI — the Apify MCP server has no
+  build-inspection tools). The rules for writing/promoting one live in `CLAUDE.template.md`, not a
+  README here.
 - **`.githooks/pre-commit`** — actual technical enforcement of the structure rules, not just an
   instruction an agent could ignore: blocks a stray `.md` at repo root, a wrongly-named
   `docs/research/` file, or an edit to an already-committed dated research file. Stack-agnostic

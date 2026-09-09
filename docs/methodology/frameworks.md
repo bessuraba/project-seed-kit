@@ -20,3 +20,6 @@ just the index.
   concentration, and BCG growth-axis/Product Life Cycle, as three separate measures.
 - [Pricing methodology](./pricing.md) — value-metric usage-based pricing, plus Apify's own
   pay-per-event mechanics (kept in since Apify Actors are a recurring project type here).
+- [Apify-specific launch/build playbook](./apify-playbook.md) — Apify Academy's own validate →
+  build → monetize → launch-channel guidance for Actors. Also see the `apify-cli-debug` skill under
+  `../../skills/` for build-debugging (not covered by the Apify MCP server).
