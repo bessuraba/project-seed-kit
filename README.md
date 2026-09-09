@@ -5,7 +5,7 @@
 Reusable docs structure and methodology library — seed new projects with it instead of
 reinventing conventions each time. Extracted from a real project that used this structure
 end-to-end, not designed up front — actively seeding
-[marketplace-signal](https://github.com/bessuraba/marketplace-signal), a live, published Apify
+[Marketplace Signal](https://apify.com/bessuraba/marketplace-signal), a live, published Apify
 Actor, not a theoretical exercise.
 
 ## What's in here
