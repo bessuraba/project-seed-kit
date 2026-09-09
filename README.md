@@ -28,6 +28,9 @@ end-to-end, not designed up front.
   (plain bash + git), works the same regardless of the project's language.
 - **`scripts/`** — standalone scripts run manually, not auto-loaded by anything. Currently just
   `setup-hooks.sh` (wires the pre-commit hook above); see `scripts/README.md`.
+- **`.env.example`** — per-project config template. Scripts/skills that need a project-specific
+  value (e.g. an Apify actor slug) read it from `.env` instead of it being hardcoded or left as a
+  manual find-and-replace placeholder. `.env` itself is gitignored; only `.env.example` is tracked.
 
 ## Using this for a new project
 
@@ -38,7 +41,9 @@ end-to-end, not designed up front.
    hook (`git config core.hooksPath .githooks`). If the project already has its own pre-commit hook
    (e.g. via npm's `prepare` script), merge the docs-structure checks into that hook instead of
    running two separate hook mechanisms — see `scripts/README.md`.
-4. Keep `docs/methodology/` as-is unless a framework genuinely doesn't apply; add new ones back
+4. Copy `.env.example` and `.gitignore` in (or merge into an existing `.gitignore`), then
+   `cp .env.example .env` and fill in real values for whatever skills/scripts need them.
+5. Keep `docs/methodology/` as-is unless a framework genuinely doesn't apply; add new ones back
    here once they've proven reusable, not just once they're written.
 
 ## Keeping this in sync

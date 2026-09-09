@@ -81,6 +81,11 @@ task notes or anything a first attempt would get right anyway.
 - **Promoting a skill to a shared/reusable location** (like this repo's own `skills/`): only after
   it's actually been reused across 2+ projects, not on first write. Strip project-specific names
   and file paths before promoting; leave a short note on which projects it's been used in.
+- **A promoted skill or script needing a project-specific value** (an actor slug, an API base URL,
+  a bucket name) reads it from an environment variable, set in `.env` (gitignored; `.env.example`
+  is the tracked template) — not hardcoded, and not a manual find-and-replace placeholder in the
+  skill's own text. Add a new variable to `.env.example` with a comment on what reads it whenever
+  one is introduced.
 
 ## If this project has an external audience (public package, Apify Actor, public API, ...)
 

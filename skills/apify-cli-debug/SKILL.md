@@ -1,6 +1,6 @@
 ---
 name: apify-cli-debug
-description: Use when a GitHub-linked Apify Actor build fails, or you need build history/logs for an Actor. The Apify MCP server has no build-inspection tools (only runs/datasets/key-value stores) — this gap is filled by the `apify` CLI. Reused across Apify Actor projects — no project-specific state, just fill in the actor slug below.
+description: Use when a GitHub-linked Apify Actor build fails, or you need build history/logs for an Actor. The Apify MCP server has no build-inspection tools (only runs/datasets/key-value stores) — this gap is filled by the `apify` CLI. Reused across Apify Actor projects unmodified — reads the actor slug from the `APIFY_ACTOR_SLUG` environment variable instead of a hardcoded value.
 ---
 
 # Apify CLI — build debugging
@@ -8,13 +8,18 @@ description: Use when a GitHub-linked Apify Actor build fails, or you need build
 MCP tools (`get-actor-run`, `get-dataset-items`, etc.) cover runs and storage, but **not builds**.
 For build status/history/logs, use the `apify` CLI directly via Bash.
 
-Actor for this repo: `<owner>/<actor-name>` — replace with the real slug (`apify.json` or the
-Console URL has it) when adapting this skill to a new project.
+Actor slug comes from the `APIFY_ACTOR_SLUG` env var (set in `.env`, see `.env.example` at repo
+root — copy it to `.env` and fill in the real `owner/actor-name` once per project; find it in
+`apify.json` or the Console URL). Load it before running any command below:
+
+```bash
+set -a; source .env; set +a
+```
 
 ## List recent builds
 
 ```bash
-apify builds ls <owner>/<actor-name> --desc --limit 5 --json
+apify builds ls "$APIFY_ACTOR_SLUG" --desc --limit 5 --json
 ```
 
 - `actorId` is a **positional argument**, not a `--actor` flag (also applies to `apify runs ls`).
@@ -52,7 +57,7 @@ bare (non-fallback) form.
 After pushing a fix, poll once (builds take ~10-25s):
 
 ```bash
-sleep 20 && apify builds ls <owner>/<actor-name> --desc --limit 2 --json
+sleep 20 && apify builds ls "$APIFY_ACTOR_SLUG" --desc --limit 2 --json
 ```
 
 Confirm the newest build has `status: "SUCCEEDED"` and `buildTag: "latest"`.
