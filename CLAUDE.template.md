@@ -6,7 +6,11 @@ that project's actual stack — everything else is generic and can be used as-is
 ## Documentation structure — mandatory
 
 All non-code docs live under `docs/`. Never create a `.md` file at repo root (except root
-`README.md`). Full structure and rationale: `docs/README.md`.
+`README.md`). Full structure and rationale: `docs/README.md`. Partly enforced by
+`.githooks/pre-commit` (root `.md` files, `docs/research/` naming, dated-file immutability) —
+that's a backstop for what's checkable mechanically, not a substitute for actually following the
+routing below; most of it (which folder something belongs in, when to update vs. create) can't be
+checked by a script.
 
 ```
 docs/

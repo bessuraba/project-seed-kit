@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# Enforces the docs/ structure rules from CLAUDE.template.md. Stack-agnostic (plain bash + git),
+# so it works the same whether the project it's copied into is Node, Python, or anything else.
+set -euo pipefail
+
+fail=0
+
+# 1. No stray .md files at repo root — only README.md and CLAUDE.md belong there.
+root_md=$(git diff --cached --name-only --diff-filter=A | grep -E '^[^/]+\.md$' | grep -vE '^(README|CLAUDE)\.md$' || true)
+if [ -n "$root_md" ]; then
+    echo "pre-commit: blocked — new .md file(s) at repo root (only README.md/CLAUDE.md belong there):"
+    echo "$root_md" | sed 's/^/  /'
+    echo "  Docs go under docs/research, docs/synthesis, docs/methodology, docs/plans, or docs/legal."
+    fail=1
+fi
+
+# 2. New docs/research/ files must follow the YYYY-MM-DD-topic.md naming (sources.md is the one
+#    named exception — a running log, not a dated session file).
+new_research=$(git diff --cached --name-only --diff-filter=A | grep -E '^docs/research/[^/]+\.md$' | grep -v '^docs/research/sources\.md$' || true)
+if [ -n "$new_research" ]; then
+    while IFS= read -r f; do
+        base=$(basename "$f")
+        if ! [[ "$base" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}-.+\.md$ ]]; then
+            echo "pre-commit: blocked — $f doesn't match docs/research/'s required naming: YYYY-MM-DD-topic.md"
+            fail=1
+        fi
+    done <<< "$new_research"
+fi
+
+# 3. Dated research files are immutable once committed — a correction is a new dated file, never
+#    an edit to an existing one (git diff --diff-filter=M only matches files that already existed
+#    in a prior commit and are being changed again, so first-time creation never trips this).
+modified_research=$(git diff --cached --name-only --diff-filter=M | grep -E '^docs/research/[0-9]{4}-[0-9]{2}-[0-9]{2}-.+\.md$' || true)
+if [ -n "$modified_research" ]; then
+    echo "pre-commit: blocked — modifying an already-committed dated research file:"
+    echo "$modified_research" | sed 's/^/  /'
+    echo "  These are frozen once written. A correction is a NEW dated file, not a rewrite."
+    fail=1
+fi
+
+if [ "$fail" -ne 0 ]; then
+    exit 1
+fi
+
+echo "pre-commit: docs structure checks passed"
